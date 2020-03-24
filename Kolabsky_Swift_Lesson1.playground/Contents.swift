@@ -35,36 +35,39 @@ if (discriminant > 0) {
         """)
 }
 
-/*
- Задание №2
- Даны катеты прямоугольного треугольника. Найти площадь, периметр и гипотенузу треугольника.
-*/
 
-// Объявим переменные
-var a1: Double = 5
-var b1: Double = 10
 
-// Решение
-var S = (a1 * b1) / 2
-var c1 = sqrt(pow(a1, 2) + pow(b1, 2))
-var P = a1 + b1 + c1
-print("Площадь треугольника S = \(S)")
-print("Гипотенуза с = \(c1)")
-print("Периметр P = \(P)\n")
-
-/*
- Задание №3
- Пользователь вводит сумму вклада в банк и годовой процент. Найти сумму вклада через 5 лет.
- */
-
-// Объявим переменные
-var deposit = 500_000.0
-var percent = 7.0
-
-print("Рассчет суммы вклада за весь период:")
-
-for number in 1...5 {
-    let profit = (deposit * percent) / 100
-    deposit += profit
-    print("\(number) год - \(Float(deposit)) рублей")
+enum SolveQuadraticResult{
+    case twoSqr(one: Double, two: Double)
+    case oneSqr(one: Double)
+    case zeroSqr(error: String)
+}
+func solveQuadratic( a: Double, b: Double, c: Double) -> SolveQuadraticResult {
+    if(a != 0) {
+        let discr: Double = pow(b, 2) - 4*a*c
+        if(discr > 0 ) {
+            let sqrOne = (-1) * b/(2 * a) + (sqrt(discr) / (2 * a))
+            let sqrTwo = (-1) * b/(2 * a) - (sqrt(discr) / (2 * a))
+            return .twoSqr(one: sqrOne, two: sqrTwo)
+        }
+        else if(discr == 0) {
+            let sqrOne = (-1) * b/(2 * a)
+            return .oneSqr(one: sqrOne)
+        } else {
+            return .zeroSqr(error: "Корней нет")
+        }
+    }
+    else {
+        let sqrOne = (-1) * c / b
+        return .oneSqr(one: sqrOne)
+    }
+}
+let result = solveQuadratic(a: 5, b: 16, c: 3)
+switch result {
+case let .twoSqr(one, two):
+    print("два корня", one, two)
+case let .oneSqr(one):
+    print("один корень", one)
+case let .zeroSqr(error):
+    print(error)
 }
