@@ -1,11 +1,9 @@
-//Общие для структур (автомобиль и грузовик) перечисления
+//Общие для структур перечисления
 enum Color {
     case red
     case green
     case blue
     case yellow
-    case purple
-    case orange
 }
 
 enum EngineState {
@@ -14,10 +12,10 @@ enum EngineState {
 }
 
 enum CarModel {
-    case BMW
-    case Mercedes
-    case Volvo
+    case Lada
+    case Toyota
     case Nissan
+    case Hyundai
 }
 
 enum WindowPosition {
@@ -45,12 +43,6 @@ enum Actions {
 struct Auto {
     
     //2. Структуры должны содержать марку авто, год выпуска, объем багажника/кузова, запущен ли двигатель, открыты ли окна, заполненный объем багажника.
-    enum Class {
-        case a_class
-        case b_class
-        case c_class
-        case d_class
-    }
     enum BodyType {
         case coupe
         case hatchBack
@@ -58,7 +50,6 @@ struct Auto {
         case cabriolet
     }
     
-    let status: Class
     let carModel: CarModel
     let bodyType: BodyType
     let color: Color
@@ -69,8 +60,7 @@ struct Auto {
     var windowPosition: WindowPosition
     var lampPosition: LampPosition
     
-    init(status: Class, carModel: CarModel, bodyType: BodyType, color: Color, yearOfManufacture: Int) {
-        self.status = status
+    init(carModel: CarModel, bodyType: BodyType, color: Color, yearOfManufacture: Int) {
         self.carModel = carModel
         self.bodyType = bodyType
         self.color = color
@@ -129,7 +119,6 @@ struct Auto {
     func description() {
         print("""
             \n
-            status: \(status)
             carModel: \(carModel)
             bodyType: \(bodyType)
             color: \(color)
@@ -144,7 +133,7 @@ struct Auto {
 }
 
 //5. Инициализировать несколько экземпляров структур. Применить к ним различные действия.
-var car = Auto(status: .c_class, carModel:  .BMW, bodyType: .coupe, color: .yellow, yearOfManufacture: 2015)
+var car = Auto(carModel:  .Toyota, bodyType: .coupe, color: .yellow, yearOfManufacture: 2018)
 
 car.description()
 car.action(.changeEngineState)
@@ -157,11 +146,9 @@ car.action(.unloadTrunk(300))
 struct Truck {
     
     enum TypeOfTruck {
-        case Panel
-        case Dump
         case Garbage
-        case Flatbed
-        case Heavy
+        case Dump
+        case Panel
     }
     
     enum MaxWeight {
@@ -254,7 +241,7 @@ struct Truck {
     }
 }
 
-var truck = Truck(maxWeight: .heavy, typeOfTruck: .Dump, carModel: .BMW, color: .green, yearOfManufacture: 2005)
+var truck = Truck(maxWeight: .heavy, typeOfTruck: .Dump, carModel: .Nissan, color: .yellow, yearOfManufacture: 2010)
 
 truck.description()
 truck.action(.changeEngineState)
